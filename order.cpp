@@ -15,6 +15,7 @@ void order::addItem(item i) {
   {
     itemList.push_back(i);
   }
+  notifyObservers();
 }
 
 std::vector<item> order::getItems() {
@@ -30,14 +31,17 @@ double order::getSubtotal() {
 }
 
 double order::getTax() {
+  notifyObservers();
   return tax;
 }
 
 double order::getTotal() {
+  notifyObservers();
   return getSubtotal() * (1 + tax);
 }
 
 double order::balance(double paid) {
   closed = true;
+  notifyObservers();
   return getTotal() - paid;
 }
